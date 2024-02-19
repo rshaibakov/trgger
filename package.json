@@ -7,14 +7,22 @@
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "lint:type": "vue-tsc --pretty --noEmit"
+    "lint:type": "vue-tsc --pretty --noEmit",
+    "lint:script": "eslint --ext .ts,.tsx,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
     "vue": "^3.4.15"
   },
   "devDependencies": {
+    "@stylistic/eslint-plugin": "^1.6.2",
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
     "@vitejs/plugin-vue": "^5.0.3",
-    "typescript": "^5.2.2",
+    "eslint": "^8.0.1",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-vue": "^9.21.1",
+    "typescript": "^5.3.3",
     "vite": "^5.1.0",
     "vue-tsc": "^1.8.27"
   }
