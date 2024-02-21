@@ -3,7 +3,7 @@ import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <div>
+  <div data-test-id="app">
     <a
       href="https://vitejs.dev"
       target="_blank"
