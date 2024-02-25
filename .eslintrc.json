@@ -11,7 +11,7 @@
   "parser": "vue-eslint-parser",
   "parserOptions": {
     "parser": "@typescript-eslint/parser",
-    "extraFileExtensions": [".ts", ".tsx", ".vue"],
+    "extraFileExtensions": [".vue"],
     "ecmaVersion": "latest",
     "sourceType": "module",
     "project": ["./tsconfig.json", "./tsconfig.node.json"]
@@ -19,6 +19,7 @@
   "plugins": [
     "vue"
   ],
+  "ignorePatterns": ["src/db.types.ts"],
   "rules": {
     "@stylistic/max-len": ["error", { "code": 80 }]
   }
