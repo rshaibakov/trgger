@@ -15,7 +15,8 @@
     "lint:script": "eslint --ext .ts,.tsx,.vue --ignore-path .gitignore .",
     "lint:style": "stylelint **/*.{css,vue}",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "update-db-types": "supabase gen types typescript --project-id \"$SUPABASE_PROJECT_ID\" > src/db.types.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.7",
