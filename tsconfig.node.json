@@ -1,4 +1,5 @@
 {
+  "exclude": ["src/test.setup.ts", "src/**/*.test.ts", "src/db.types.ts"],
   "compilerOptions": {
     "composite": true,
     "skipLibCheck": true,
