@@ -12,15 +12,21 @@ export type Database = {
       sprints: {
         Row: {
           created_at: string
+          finish_at: string | null
           id: string
+          start_at: string | null
         }
         Insert: {
           created_at?: string
+          finish_at?: string | null
           id?: string
+          start_at?: string | null
         }
         Update: {
           created_at?: string
+          finish_at?: string | null
           id?: string
+          start_at?: string | null
         }
         Relationships: []
       }
