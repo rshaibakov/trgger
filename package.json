@@ -18,6 +18,7 @@
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.39.7",
     "vue": "^3.4.15"
   },
   "devDependencies": {
