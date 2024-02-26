@@ -21,6 +21,7 @@
   ],
   "ignorePatterns": ["src/db.types.ts"],
   "rules": {
-    "@stylistic/max-len": ["error", { "code": 80 }]
+    "@stylistic/max-len": ["error", { "code": 80 }],
+    "vue/multi-word-component-names": "off"
   }
 }
