@@ -30,8 +30,7 @@
   height: 100%;
   display: grid;
   grid-template:
-    '. . .' minmax(1rem, 1fr)
-    '. title .' min-content
+    '. title .' minmax(min-content, 1fr)
     '. form .' auto
     '. . .' minmax(1rem, 1fr)
     / minmax(1rem, 1fr) minmax(320px, auto) minmax(1rem, 1fr);
@@ -39,6 +38,7 @@
 
 .title {
   grid-area: title;
+  align-self: end;
 }
 
 .form {
