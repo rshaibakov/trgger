@@ -39,6 +39,7 @@
 .title {
   grid-area: title;
   align-self: end;
+  color: hsl(200deg 48% 80%);
 }
 
 .form {

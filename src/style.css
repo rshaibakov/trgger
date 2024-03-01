@@ -8,7 +8,7 @@
   height: 100%;
   color-scheme: light dark;
   color: var(--color-white);
-  background-color: hsl(200deg 40% 10%);
+  background-color: hsl(200deg 40% 12%);
   font-synthesis: none;
   text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
@@ -113,17 +113,18 @@ button {
   font-size: 1rem;
   font-weight: 500;
   line-height: 0;
-  background-color: hsl(200deg 90% 45%);
+  background-color: hsl(200deg 48% 56%);
+  color: hsl(200deg 48% 12%);
   cursor: pointer;
   transition: border-color 0.25s;
 }
 
 button:hover {
-  background-color: hsl(200deg 90% 53%);
+  background-color: hsl(200deg 48% 60%);
 }
 
 button:active {
-  background-color: hsl(200deg 90% 37%);
+  background-color: hsl(200deg 48% 52%);
 }
 
 button:focus-visible {
@@ -137,9 +138,20 @@ input {
   align-items: center;
   vertical-align: top;
   box-sizing: border-box;
+  background-color: hsl(200deg 48% 8%);
   border-radius: .75rem;
   border: none;
   font-size: 1rem;
+  color: hsl(200deg 48% 80%);
+}
+
+input::placeholder {
+  color: hsl(200deg 48% 24%);
+}
+
+input:focus {
+  border: 2px solid hsl(200deg 48% 80%);
+  outline: none;
 }
 
 #app {
