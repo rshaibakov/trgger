@@ -1,4 +1,26 @@
 <script lang="ts" setup>
+import { ref } from 'vue'
+import { supabase } from '../../db'
+
+const email = ref('')
+const isPending = ref(false)
+
+const handleSubmit = async () => {
+  if (!email.value) {
+    return
+  }
+
+  if (!isPending.value) {
+    isPending.value = true
+
+    const { data, error } = await supabase.auth.signInWithOtp({
+      email: email.value,
+    })
+
+    isPending.value = false
+    console.log(data, error)
+  }
+}
 </script>
 
 <template>
@@ -7,8 +29,12 @@
       Вход
     </h1>
 
-    <form class="form">
+    <form
+      class="form"
+      @submit.prevent="handleSubmit"
+    >
       <input
+        v-model="email"
         class="email-field"
         type="email"
         placeholder="Твой email"
@@ -19,7 +45,7 @@
         class="submit"
         type="submit"
       >
-        Получить ссылку
+        {{ isPending ? 'Загрузка...' : 'Получить ссылку' }}
       </button>
     </form>
   </section>
