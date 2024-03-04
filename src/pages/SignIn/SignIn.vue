@@ -1,27 +1,17 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { supabase } from '../../db'
+import { usePending } from '../../composables/usePending'
 
 const email = ref('')
 const wasEmailSent = ref(false)
-const isPending = ref(false)
 
 const handleEmailSubmit = async () => {
   if (!email.value) {
     return
   }
 
-  if (isPending.value) {
-    return
-  }
-
-  isPending.value = true
-
-  const { error } = await supabase.auth.signInWithOtp({
-    email: email.value,
-  })
-
-  isPending.value = false
+  const { error } = await supabase.auth.signInWithOtp({ email: email.value })
 
   if (error) {
     // TODO: Обработать ошибку
@@ -31,17 +21,16 @@ const handleEmailSubmit = async () => {
   wasEmailSent.value = true
 }
 
+const {
+  isPending: hasEmailSubmitPending,
+  functionWithPending: handleEmailSubmitWithPending,
+} = usePending<typeof handleEmailSubmit>(handleEmailSubmit)
+
 const token = ref('')
 const handleOtpSubmit = async () => {
   if (!email.value || !token.value) {
     return
   }
-
-  if (isPending.value) {
-    return
-  }
-
-  isPending.value = true
 
   const { data, error } = await supabase.auth.verifyOtp({
     email: email.value,
@@ -49,12 +38,15 @@ const handleOtpSubmit = async () => {
     type: 'email',
   })
 
-  isPending.value = false
-  console.log(data, error)
   if (error) {
     // TODO: Обработать ошибку
   }
 }
+
+const {
+  isPending: hasOtpSubmitPending,
+  functionWithPending: handleOtpSubmitWithPending,
+} = usePending<typeof handleOtpSubmit>(handleOtpSubmit)
 </script>
 
 <template>
@@ -66,7 +58,7 @@ const handleOtpSubmit = async () => {
     <form
       v-if="wasEmailSent"
       class="form"
-      @submit.prevent="handleOtpSubmit"
+      @submit.prevent="handleOtpSubmitWithPending"
     >
       <input
         v-model="token"
@@ -80,14 +72,14 @@ const handleOtpSubmit = async () => {
         class="submit"
         type="submit"
       >
-        {{ isPending ? 'Загрузка...' : 'Отправить код' }}
+        {{ hasOtpSubmitPending ? 'Загрузка...' : 'Отправить код' }}
       </button>
     </form>
 
     <form
       v-else
       class="form"
-      @submit.prevent="handleEmailSubmit"
+      @submit.prevent="handleEmailSubmitWithPending"
     >
       <input
         v-model="email"
@@ -101,7 +93,7 @@ const handleOtpSubmit = async () => {
         class="submit"
         type="submit"
       >
-        {{ isPending ? 'Загрузка...' : 'Получить ссылку' }}
+        {{ hasEmailSubmitPending ? 'Загрузка...' : 'Получить ссылку' }}
       </button>
     </form>
   </section>
