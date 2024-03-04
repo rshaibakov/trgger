@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import Journal from './pages/Journal/Journal.vue'
-import Login from './pages/Login/Login.vue'
+import SignIn from './pages/SignIn/SignIn.vue'
 
 export const routes = [
   {
@@ -10,9 +10,9 @@ export const routes = [
     component: Journal,
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: Login,
+    path: '/signin',
+    name: 'SignIn',
+    component: SignIn,
   },
 ]
 

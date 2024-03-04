@@ -1,6 +1,6 @@
 import { test, expect } from 'vitest'
 import { render } from '@testing-library/vue'
-import SignIn from './Login.vue'
+import SignIn from './SignIn.vue'
 
 test('component displayed', async () => {
   const { getByTestId } = render(SignIn)
