@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 
 import { supabase } from '@/db'
 import { usePending } from '@/composables/usePending'
 import { useSignInStore } from '../useSignInStore'
 
+const router = useRouter()
 const { email, token } = useSignInStore()
 
 const isInvalid = computed(() => !email.value || !token.value)
@@ -24,6 +26,8 @@ const handleSubmit = async () => {
     // TODO: Обработать ошибку
     return
   }
+
+  router.push({ name: 'journal' })
 }
 
 const {
