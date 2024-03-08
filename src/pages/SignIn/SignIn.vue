@@ -1,52 +1,9 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { supabase } from '../../db'
-import { usePending } from '../../composables/usePending'
+import EmailForm from './components/EmailForm.vue'
+import OtpForm from './components/OtpForm.vue'
+import { useSignInStore } from './useSignInStore'
 
-const email = ref('')
-const wasEmailSent = ref(false)
-
-const handleEmailSubmit = async () => {
-  if (!email.value) {
-    return
-  }
-
-  const { error } = await supabase.auth.signInWithOtp({ email: email.value })
-
-  if (error) {
-    // TODO: Обработать ошибку
-    return
-  }
-
-  wasEmailSent.value = true
-}
-
-const {
-  isPending: hasEmailSubmitPending,
-  functionWithPending: handleEmailSubmitWithPending,
-} = usePending<typeof handleEmailSubmit>(handleEmailSubmit)
-
-const token = ref('')
-const handleOtpSubmit = async () => {
-  if (!email.value || !token.value) {
-    return
-  }
-
-  const { data, error } = await supabase.auth.verifyOtp({
-    email: email.value,
-    token: token.value,
-    type: 'email',
-  })
-
-  if (error) {
-    // TODO: Обработать ошибку
-  }
-}
-
-const {
-  isPending: hasOtpSubmitPending,
-  functionWithPending: handleOtpSubmitWithPending,
-} = usePending<typeof handleOtpSubmit>(handleOtpSubmit)
+const { wasEmailSubmitted } = useSignInStore()
 </script>
 
 <template>
@@ -55,47 +12,15 @@ const {
       Вход
     </h1>
 
-    <form
-      v-if="wasEmailSent"
+    <OtpForm
+      v-if="wasEmailSubmitted"
       class="form"
-      @submit.prevent="handleOtpSubmitWithPending"
-    >
-      <input
-        v-model="token"
-        class="text-field"
-        type="text"
-        placeholder="Код подтверждения"
-        required
-      >
+    />
 
-      <button
-        class="submit"
-        type="submit"
-      >
-        {{ hasOtpSubmitPending ? 'Загрузка...' : 'Отправить код' }}
-      </button>
-    </form>
-
-    <form
+    <EmailForm
       v-else
       class="form"
-      @submit.prevent="handleEmailSubmitWithPending"
-    >
-      <input
-        v-model="email"
-        class="text-field"
-        type="email"
-        placeholder="Твой email"
-        required
-      >
-
-      <button
-        class="submit"
-        type="submit"
-      >
-        {{ hasEmailSubmitPending ? 'Загрузка...' : 'Получить ссылку' }}
-      </button>
-    </form>
+    />
   </section>
 </template>
 
@@ -118,25 +43,5 @@ const {
 
 .form {
   grid-area: form;
-  display: grid;
-  grid-template: 'text-field submit' / 320px auto;
-  gap: 1rem;
 }
-
-.text-field {
-  grid-area: text-field;
-}
-
-.submit {
-  grid-area: submit;
-}
-
-@media (width < 560px) {
-  .form {
-    grid-template:
-      'text-field'
-      'submit';
-  }
-}
-
 </style>
