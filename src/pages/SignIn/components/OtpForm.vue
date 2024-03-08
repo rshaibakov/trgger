@@ -2,12 +2,13 @@
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 
-import { supabase } from '@/db'
+import { useUserStore } from '@/store/user'
 import { usePending } from '@/composables/usePending'
 import { useSignInStore } from '../useSignInStore'
 
 const router = useRouter()
 const { email, token } = useSignInStore()
+const { verifyOtp } = useUserStore()
 
 const isInvalid = computed(() => !email.value || !token.value)
 
@@ -16,11 +17,7 @@ const handleSubmit = async () => {
     return
   }
 
-  const { data, error } = await supabase.auth.verifyOtp({
-    email: email.value,
-    token: token.value,
-    type: 'email',
-  })
+  const { data, error } = await verifyOtp(email.value, token.value)
 
   if (error) {
     // TODO: Обработать ошибку

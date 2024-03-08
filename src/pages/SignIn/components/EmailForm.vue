@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 
-import { supabase } from '@/db'
+import { useUserStore } from '@/store/user'
 import { usePending } from '@/composables/usePending'
 import { useSignInStore } from '../useSignInStore'
 
 const { email, wasEmailSubmitted } = useSignInStore()
+const { signIn } = useUserStore()
 
 const isInvalid = computed(() => !email.value)
 
@@ -14,7 +15,7 @@ const handleSubmit = async () => {
     return
   }
 
-  const { error } = await supabase.auth.signInWithOtp({ email: email.value })
+  const { error } = await signIn(email.value)
 
   if (error) {
     // TODO: Обработать ошибку
