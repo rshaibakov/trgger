@@ -15,6 +15,7 @@ export const allowForGuest: NavigationGuard = async (to, from, next) => {
     next()
   }
   catch (error) {
+    // TODO: Доработать обработку ошибок
     next()
   }
 }
@@ -31,6 +32,7 @@ export const allowForSignedInUser: NavigationGuard = async (to, from, next) => {
     next()
   }
   catch (error) {
+    // TODO: Доработать обработку ошибок
     next({ name: 'SignIn' })
   }
 }
