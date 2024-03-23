@@ -1,24 +1,56 @@
-import { type Session, type User } from '@supabase/supabase-js'
-import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { type User } from '@supabase/supabase-js'
+import { defineStore } from 'pinia'
 import { supabase } from '../db.ts'
+import { NotFoundUserError } from '@/errors.ts'
 
 export const useUserStore = defineStore('user', () => {
-  const user = ref<User | null>(null)
-  const session = ref<Session | null>(null)
+  const user = ref<User | undefined>(undefined)
 
   const signIn = async (email: string) => {
-    return await supabase.auth.signInWithOtp({ email })
+    const { error } = await supabase.auth.signInWithOtp({ email })
+
+    if (error) {
+      throw error
+    }
   }
 
   const verifyOtp = async (email: string, token: string) => {
-    return await supabase.auth.verifyOtp({ email, token, type: 'email' })
+    const { data, error } = await supabase.auth.verifyOtp({ email, token, type: 'email' })
+
+    // TODO: Вынести обработку ошибка в отдельную функцию
+    if (error) {
+      throw error
+    }
+
+    if (!data.user) {
+      throw new NotFoundUserError()
+    }
+
+    user.value = data.user
+  }
+
+  const fetchUser = async () => {
+    const { data, error } = await supabase.auth.getUser()
+
+    // TODO: Вынести обработку ошибка в отдельную функцию
+    if (error) {
+      throw error
+    }
+
+    if (!data.user) {
+      throw new NotFoundUserError()
+    }
+
+    user.value = data.user
+
+    return user.value
   }
 
   return {
     user,
-    session,
     signIn,
     verifyOtp,
+    fetchUser,
   }
 })
