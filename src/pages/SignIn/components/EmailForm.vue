@@ -15,12 +15,7 @@ const handleSubmit = async () => {
     return
   }
 
-  const { error } = await signIn(email.value)
-
-  if (error) {
-    // TODO: Обработать ошибку
-    return
-  }
+  await signIn(email.value)
 
   wasEmailSubmitted.value = true
 }

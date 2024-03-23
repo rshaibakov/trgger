@@ -17,14 +17,9 @@ const handleSubmit = async () => {
     return
   }
 
-  const { data, error } = await verifyOtp(email.value, token.value)
+  await verifyOtp(email.value, token.value)
 
-  if (error) {
-    // TODO: Обработать ошибку
-    return
-  }
-
-  router.push({ name: 'journal' })
+  router.push({ name: 'Journal' })
 }
 
 const {
