@@ -4,6 +4,7 @@ import { FlatCompat } from '@eslint/eslintrc'
 import { fixupConfigRules } from '@eslint/compat'
 import js from '@eslint/js'
 import stylistic from '@stylistic/eslint-plugin'
+import unicorn from 'eslint-plugin-unicorn'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -26,6 +27,7 @@ const config = [
     semi: false,
     jsx: true,
   }),
+  unicorn.configs['flat/all'],
 ]
 
 export default config
