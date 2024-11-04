@@ -4,8 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "prebuild": "pnpm lint",
     "build": "next build",
     "start": "next start",
+    "lint": "pnpm --parallel '/^lint:.*/'",
     "lint:script": "eslint . --flag unstable_ts_config",
     "lint:commit": "commitlint --edit",
     "release": "semantic-release",
@@ -34,6 +36,7 @@
     "eslint": "^9.14.0",
     "eslint-config-next": "15.0.2",
     "husky": "^9.1.6",
+    "jiti": "^2.4.0",
     "semantic-release": "^24.2.0",
     "typescript": "^5"
   }

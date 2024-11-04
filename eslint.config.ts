@@ -7,12 +7,12 @@ import { fixupConfigRules } from "@eslint/compat"
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const compat = new FlatCompat({
-    baseDirectory: __dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all,
+  baseDirectory: __dirname,
+  recommendedConfig: js.configs.recommended,
+  allConfig: js.configs.all,
 })
 
-export default [
+const config = [
   {
     ignores: ['.next/*'],
   },
@@ -20,3 +20,5 @@ export default [
       ...compat.extends("next/core-web-vitals", "next/typescript"),
   ]),
 ]
+
+export default config
