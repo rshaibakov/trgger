@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+      - next
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+
+    - uses: pnpm/action-setup@v3
+      with:
+        version: 9
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'pnpm'
+
+    - name: Install dependencies
+      run: pnpm install
+
+    - name: Release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+      run: pnpm release
